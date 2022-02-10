@@ -1,0 +1,15 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+<h1>RELATED PAGES</h1>
+    <ul>
+        {% for list in poss_search %}
+            <li><a href="wiki/{{list}}">{{ list }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
