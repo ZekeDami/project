@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<form action="{% url 'add' %}" method="POST">
+		{% csrf_token %}
+		<h6>Title</h6>
+		{{ listing_form.title }}
+		<br><br>
+		
+		<h6>Description</h6>
+		{{ listing_form.description }}
+		<br><br>
+		
+		<h6>Starting Bid</h6>
+		{{ listing_form.bid }}
+		
+		<br><br>
+		<select name="category">
+				{% for cat in category %}
+				<option value="{{cat.id}}">{{cat}}</option>
+				{% endfor %}
+		</select>
+		
+		<h6>Image URL</h6>
+		{{listing_form.image}}
+		
+		<br><br>
+		<input type="submit">
+		
+</form>
+		
+{% endblock %}

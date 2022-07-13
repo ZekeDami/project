@@ -1,0 +1,57 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<h2><b>{{ item.title }}</b></h2>
+<h4>Listed by: {{ item.user }}</h4>
+<div>
+		<form action="{% url 'WatchList' item.id %}">
+				{% csrf_token %}
+				{% if watch %}
+				<input type="submit" value="Watchlist" class="btn btn-primary" style="background-color:blue">
+				{% else %}
+				<input type="submit" value="Watchlist" class="btn btn-outline-primary">
+				{% endif%}
+		</form>
+		</div>
+		<img src="{{ item.image }}" alt="item image" class="d-inline-block align-text-top" style="width:18rem">
+		<p>{{ item.desc }}
+		</p>
+		<br><br>
+{% if massage2 %}
+{{ massage2 }}
+{% else %}
+		<h5>current bid:${{ item.starting_bid }}</h5>
+<form action="{% url 'placebid' item.id %}" method="POST">
+		{% csrf_token %}
+		<div>Bid $ <input type="number" step="0.01" name="bid" placeholder="must be greater than {{ item.starting_bid}}">
+				<input type="submit" class="btn btn-primary" value="Place Bid">
+		</div>
+</form>
+{% endif %}
+</div>
+<div>
+		{% if massage %}
+		<form action="{% url 'closebid' item.id %}">
+				<br><br>
+				<input type="submit" class="btn btn-primary" value="Close Bid">
+		</form>
+		{% endif %}
+</div><br>
+<button type="button" class="btn btn-outline-primary"> <a href="{% url 'index' %}">Listing</a></button>
+<br><br><br>
+
+<div><br>
+		<form action="{% url 'comment' item.id %}" method="POST">
+				{% csrf_token %}
+				<input type="text" name="comment" placeholder="Thank's for your comment">
+				<input type="submit" class="btn btn-primary" value="comment">
+		</form>
+		
+</div>
+<div>
+		<h5>COMMENT</h5>
+		{% for words in comment %}
+		<h6> comment by {{words.user}}</h6>	
+		<p>{{words.comment}}<p>
+		{% endfor %}
+</div>
+{% endblock %}
